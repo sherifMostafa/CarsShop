@@ -1,0 +1,19 @@
+<div class="container">
+<h1>New Vehicle</h1>
+<form>
+    <div class="form-group">
+      <label for="Make">Make</label>
+      <select class="form-control" id="Make" (change)="onModelChange($event)" formControlName="make">
+        <option> Choose </option>
+        <option *ngFor="let item of makes" value="{{item.id}}"> {{item.name}}</option>
+      </select>
+  
+    </div>
+    <div class="form-group">
+      <label for="Model">Model</label>
+      <select class="form-control" id="Model"></select>
+    </div>
+  
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
