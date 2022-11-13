@@ -1,19 +1,87 @@
 <div class="container">
-<h1>New Vehicle</h1>
-<form>
+  <h1>New Vehicle</h1>
+  <form [formGroup]="dataForm">
     <div class="form-group">
       <label for="Make">Make</label>
-      <select class="form-control" id="Make" (change)="onModelChange($event)" formControlName="make">
-        <option> Choose </option>
-        <option *ngFor="let item of makes" value="{{item.id}}"> {{item.name}}</option>
+      <select
+        class="form-control"
+        id="Make"
+        (change)="onModelChange($event)"
+        formControlName="make"
+        aria-placeholder="Choose Make"
+      >
+        <option [ngValue]="null" aria-disabled="true">Choose</option>
+        <option *ngFor="let item of makes" value="{{ item.id }}">
+          {{ item.name }}
+        </option>
       </select>
-  
+      <div class="alert-danger" *ngIf="submitted && frm.make.errors">
+        <div *ngIf="frm.make.errors.required">
+          <small> Choose Make </small>
+        </div>
+      </div>
     </div>
     <div class="form-group">
       <label for="Model">Model</label>
-      <select class="form-control" id="Model"></select>
+      <select
+        class="form-control"
+        id="Model"
+        formControlName="model"
+        aria-placeholder="Choose Model"
+      >
+        <option [ngValue]="null" aria-disabled="true">Choose</option>
+        <option *ngFor="let item of models" value="{{ item.id }}">
+          {{ item.name }}
+        </option>
+      </select>
+
+      <div class="alert-danger" *ngIf="submitted && frm.model.errors">
+        <div *ngIf="frm.model.errors.required">
+          <small> Choose Model </small>
+        </div>
+      </div>
     </div>
-  
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <div class="form-group">
+      <p>Is this Vehicle Registerd</p>
+      <div class="radio">
+        <label for="Registered">
+          <input type="radio" id="Registered" [value]="true" />
+          Yes
+        </label>
+      </div>
+      <div class="radio">
+        <label for="NotRegistered">
+          <input type="radio" id="NotRegistered" [value]="true" />
+          No
+        </label>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <h2>Features</h2>
+      <div class="checkbox" *ngFor="let f of features">
+        <label for="feature{{ f.id }}">
+          <input type="checkbox" id="feature{{ f.id }}" />
+          {{ f.name }}
+        </label>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <h2>Contact</h2>
+      <div class="form-group">
+        <label for="">Name</label><input type="text" class="form-control" />
+      </div>
+      <div class="form-group">
+        <label for="">Phone</label><input type="text" class="form-control" />
+      </div>
+      <div class="form-group">
+        <label for="">Email</label><input type="text" class="form-control" />
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary" (click)="save()">
+      Submit
+    </button>
   </form>
 </div>

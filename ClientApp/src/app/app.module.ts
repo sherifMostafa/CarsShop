@@ -1,3 +1,4 @@
+import { FeatureSerice } from './Services/feature.service';
 import { MakeSerice } from './Services/make.service';
 import { AppRoutingModule } from './app-routing.module';
 import { NgModule } from '@angular/core';
@@ -16,16 +17,16 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     VehicleFormComponent,
     NotFoundComponent,
     NavbarComponent,
-    HomeComponent
+    HomeComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
-  providers: [MakeSerice],
-  bootstrap: [AppComponent]
+  providers: [MakeSerice, FeatureSerice],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

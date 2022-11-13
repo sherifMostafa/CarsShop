@@ -1,23 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Courses\\[FreeCourseSite.com] Udemy - Build a Real-world App with ASP.NET Core and Angular 2 (4+)\\CarsProject\\Vega\\Vega\\Vega.csproj": {}
+    "E:\\Training\\CarsShop\\Vega\\Vega.csproj": {}
   },
   "projects": {
-    "D:\\Courses\\[FreeCourseSite.com] Udemy - Build a Real-world App with ASP.NET Core and Angular 2 (4+)\\CarsProject\\Vega\\Vega\\Vega.csproj": {
+    "E:\\Training\\CarsShop\\Vega\\Vega.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Courses\\[FreeCourseSite.com] Udemy - Build a Real-world App with ASP.NET Core and Angular 2 (4+)\\CarsProject\\Vega\\Vega\\Vega.csproj",
+        "projectUniqueName": "E:\\Training\\CarsShop\\Vega\\Vega.csproj",
         "projectName": "Vega",
-        "projectPath": "D:\\Courses\\[FreeCourseSite.com] Udemy - Build a Real-world App with ASP.NET Core and Angular 2 (4+)\\CarsProject\\Vega\\Vega\\Vega.csproj",
-        "packagesPath": "C:\\Users\\DEV100021\\.nuget\\packages\\",
-        "outputPath": "D:\\Courses\\[FreeCourseSite.com] Udemy - Build a Real-world App with ASP.NET Core and Angular 2 (4+)\\CarsProject\\Vega\\Vega\\obj\\",
+        "projectPath": "E:\\Training\\CarsShop\\Vega\\Vega.csproj",
+        "packagesPath": "C:\\Users\\SherifLashin\\.nuget\\packages\\",
+        "outputPath": "E:\\Training\\CarsShop\\Vega\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\DEV100021\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\SherifLashin\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -76,7 +73,8 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -88,7 +86,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.404\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
         }
       }
     }
