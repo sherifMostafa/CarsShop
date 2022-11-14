@@ -3,6 +3,8 @@ import { MakeSerice } from './../../Services/make.service';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { FeatureSerice } from 'src/app/Services/feature.service';
+import { VehicleModel } from 'src/app/Models/VehicleModel';
+import { IDropdownSettings } from 'ng-multiselect-dropdown';
 
 @Component({
   selector: 'app-vehicle-form',
@@ -10,13 +12,16 @@ import { FeatureSerice } from 'src/app/Services/feature.service';
   styleUrls: ['./vehicle-form.component.css'],
 })
 export class VehicleFormComponent implements OnInit {
+  dropdownSettings: IDropdownSettings;
   makes: any[];
+  model: VehicleModel;
   features: any[];
   submitted = false;
   models: any;
   makeId: any;
   vehicle: any;
   dataForm: FormGroup;
+  featureIds: number[] = [];
 
   get frm() {
     return this.dataForm.controls;
@@ -30,7 +35,18 @@ export class VehicleFormComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.dropdownSettings = {
+      singleSelection: false,
+      idField: 'id',
+      textField: 'name',
+      selectAllText: 'Select All',
+      unSelectAllText: 'UnSelect All',
+      itemsShowLimit: 3,
+      allowSearchFilter: true,
+    };
+    this.model = new VehicleModel();
     this.buildform();
+
     this.loadData();
   }
 
@@ -39,6 +55,22 @@ export class VehicleFormComponent implements OnInit {
       model: new FormControl('', Validators.compose([Validators.required])),
       make: new FormControl('', Validators.compose([Validators.required])),
       isregisterd: new FormControl(
+        '',
+        Validators.compose([Validators.required])
+      ),
+      featuresControl: new FormControl(
+        '',
+        Validators.compose([Validators.required])
+      ),
+      contactName: new FormControl(
+        '',
+        Validators.compose([Validators.required])
+      ),
+      contactEmail: new FormControl(
+        '',
+        Validators.compose([Validators.required, Validators.email])
+      ),
+      contactPhone: new FormControl(
         '',
         Validators.compose([Validators.required])
       ),
@@ -52,11 +84,14 @@ export class VehicleFormComponent implements OnInit {
 
     this.featureService.getFeatures().subscribe((data) => {
       this.features = data;
+      console.log(this.features);
     });
   }
 
   save() {
     this.submitted = true;
+    this.model.features = this.featureIds.map((x) => x);
+    console.log(this.model.features);
     if (this.dataForm.invalid) {
       return;
     }

@@ -1,18 +1,11 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
-  "cli": {
-    "analytics": "0a3259c3-31ed-4cfe-bf75-0511ac5125b6"
-  },
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "ClientApp": {
+    "angular-tour-of-heroes": {
       "projectType": "application",
-      "schematics": {
-        "@schematics/angular:application": {
-          "strict": true
-        }
-      },
+      "schematics": {},
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
@@ -20,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/ClientApp",
+            "outputPath": "dist/angular-tour-of-heroes",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -71,10 +64,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "ClientApp:build:production"
+              "browserTarget": "angular-tour-of-heroes:build:production"
             },
             "development": {
-              "browserTarget": "ClientApp:build:development"
+              "browserTarget": "angular-tour-of-heroes:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -82,7 +75,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "ClientApp:build"
+            "browserTarget": "angular-tour-of-heroes:build"
           }
         },
         "test": {
@@ -98,8 +91,6 @@
             ],
             "styles": [
               "src/styles.css"
-         
-             
             ],
             "scripts": []
           }
@@ -107,5 +98,7 @@
       }
     }
   },
-  "defaultProject": "ClientApp"
+  "cli": {
+    "analytics": false
+  }
 }

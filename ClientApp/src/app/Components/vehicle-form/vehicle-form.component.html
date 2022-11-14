@@ -15,8 +15,8 @@
           {{ item.name }}
         </option>
       </select>
-      <div class="alert-danger" *ngIf="submitted && frm.make.errors">
-        <div *ngIf="frm.make.errors.required">
+      <div class="alert-danger" *ngIf="submitted && frm['make'].errors">
+        <div *ngIf="frm['make'].errors?.['required']">
           <small> Choose Make </small>
         </div>
       </div>
@@ -27,6 +27,7 @@
         class="form-control"
         id="Model"
         formControlName="model"
+        [(ngModel)]="model.modelId"
         aria-placeholder="Choose Model"
       >
         <option [ngValue]="null" aria-disabled="true">Choose</option>
@@ -35,8 +36,8 @@
         </option>
       </select>
 
-      <div class="alert-danger" *ngIf="submitted && frm.model.errors">
-        <div *ngIf="frm.model.errors.required">
+      <div class="alert-danger" *ngIf="submitted && frm['make'].errors">
+        <div *ngIf="frm['model'].errors?.['required']">
           <small> Choose Model </small>
         </div>
       </div>
@@ -45,13 +46,27 @@
       <p>Is this Vehicle Registerd</p>
       <div class="radio">
         <label for="Registered">
-          <input type="radio" id="Registered" [value]="true" />
+          <input
+            type="radio"
+            id="Registered"
+            name="isregisterd"
+            formControlName="isregisterd"
+            [value]="1"
+            [(ngModel)]="model.isRegistered"
+          />
           Yes
         </label>
       </div>
       <div class="radio">
         <label for="NotRegistered">
-          <input type="radio" id="NotRegistered" [value]="true" />
+          <input
+            type="radio"
+            id="NotRegistered"
+            name="isregisterd"
+            formControlName="isregisterd"
+            [value]="0"
+            [(ngModel)]="model.isRegistered"
+          />
           No
         </label>
       </div>
@@ -59,24 +74,80 @@
 
     <div class="form-group">
       <h2>Features</h2>
-      <div class="checkbox" *ngFor="let f of features">
-        <label for="feature{{ f.id }}">
-          <input type="checkbox" id="feature{{ f.id }}" />
-          {{ f.name }}
-        </label>
+      <ng-multiselect-dropdown
+        [placeholder]="'custom placeholder'"
+        [settings]="dropdownSettings"
+        [data]="features"
+        formControlName="featuresControl"
+        [(ngModel)]="featureIds"
+      >
+      </ng-multiselect-dropdown>
+      <div
+        class="alert-danger"
+        *ngIf="submitted && frm['featuresControl'].errors"
+      >
+        <div *ngIf="frm['featuresControl'].errors?.['required']">
+          <small> Select Features </small>
+        </div>
       </div>
     </div>
 
     <div class="form-group">
       <h2>Contact</h2>
       <div class="form-group">
-        <label for="">Name</label><input type="text" class="form-control" />
+        <label for="contactName">Name</label
+        ><input
+          type="text"
+          class="form-control"
+          [(ngModel)]="model.contact.name"
+          formControlName="contactName"
+        />
+        <div
+          class="alert-danger"
+          *ngIf="submitted && frm['contactName'].errors"
+        >
+          <div *ngIf="frm['contactName'].errors?.['required']">
+            <small> Enter Contact Name </small>
+          </div>
+        </div>
       </div>
       <div class="form-group">
-        <label for="">Phone</label><input type="text" class="form-control" />
+        <label for="contactPhone">Phone</label
+        ><input
+          type="text"
+          class="form-control"
+          [(ngModel)]="model.contact.phone"
+          formControlName="contactPhone"
+        />
+        <div
+          class="alert-danger"
+          *ngIf="submitted && frm['contactPhone'].errors"
+        >
+          <div *ngIf="frm['contactPhone'].errors?.['required']">
+            <small> Enter Contact Phone </small>
+          </div>
+        </div>
       </div>
       <div class="form-group">
-        <label for="">Email</label><input type="text" class="form-control" />
+        <label for="contactEmail">Email</label
+        ><input
+          type="text"
+          class="form-control"
+          [(ngModel)]="model.contact.email"
+          formControlName="contactEmail"
+        />
+
+        <div
+          class="alert-danger"
+          *ngIf="submitted && frm['contactEmail'].errors"
+        >
+          <div *ngIf="frm['contactEmail'].errors?.['required']">
+            <small> Enter Contact Email </small>
+          </div>
+          <div *ngIf="frm['contactEmail'].errors?.['email']">
+            <small> Enter Contact Email in Right Formate </small>
+          </div>
+        </div>
       </div>
     </div>
 

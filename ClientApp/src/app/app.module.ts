@@ -10,6 +10,8 @@ import { NotFoundComponent } from './Components/not-found/not-found.component';
 import { NavbarComponent } from './Components/navbar/navbar.component';
 import { HomeComponent } from './Components/home/home.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
 @NgModule({
   declarations: [
@@ -25,6 +27,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    MultiSelectModule,
+    NgMultiSelectDropDownModule.forRoot(),
   ],
   providers: [MakeSerice, FeatureSerice],
   bootstrap: [AppComponent],
