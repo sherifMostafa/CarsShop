@@ -14,7 +14,7 @@ using Vega.UnitOfwork;
 
 namespace Vega.Controllers
 {
-    [Route("api/Vehicles")]
+    [Route("api/[controller]")]
     [ApiController]
     public class VehicleController : ControllerBase
     {

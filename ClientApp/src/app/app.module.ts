@@ -13,6 +13,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { VehicleService } from './Services/vehicle.service';
+import { ListVehiclesComponent } from './Components/list-vehicles/list-vehicles.component';
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -21,6 +24,7 @@ import { VehicleService } from './Services/vehicle.service';
     NotFoundComponent,
     NavbarComponent,
     HomeComponent,
+    ListVehiclesComponent,
   ],
   imports: [
     BrowserModule,
@@ -30,6 +34,8 @@ import { VehicleService } from './Services/vehicle.service';
     ReactiveFormsModule,
     MultiSelectModule,
     NgMultiSelectDropDownModule.forRoot(),
+    ToastrModule.forRoot(),
+    BrowserAnimationsModule,
   ],
   providers: [MakeService, FeatureService, VehicleService],
   bootstrap: [AppComponent],

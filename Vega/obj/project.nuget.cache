@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Dt75YgGonlu+Xj0QygejnKO4fV5u3fI+gLPZ4ov/yssSCf6vRAMg4cauE0HIZNf6Srp4zR4wYY4xF5LqHbYliQ==",
+  "dgSpecHash": "dSi6iBBM6o7zW+p0HWfv2xOPQBCkMYTz3B08aiBe38PNbFLX02d0FmG0vzrIan5buQLlMcC1kpQ92DKqei/AdA==",
   "success": true,
-  "projectFilePath": "E:\\Training\\CarsShop\\Vega\\Vega.csproj",
+  "projectFilePath": "E:\\Training\\Vega\\CarsShop\\Vega\\Vega.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\SherifLashin\\.nuget\\packages\\automapper\\10.1.1\\automapper.10.1.1.nupkg.sha512",
     "C:\\Users\\SherifLashin\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\8.1.1\\automapper.extensions.microsoft.dependencyinjection.8.1.1.nupkg.sha512",

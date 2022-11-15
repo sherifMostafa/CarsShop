@@ -6,6 +6,7 @@ import { FeatureService } from 'src/app/Services/feature.service';
 import { VehicleService } from 'src/app/Services/vehicle.service';
 import { VehicleModel } from 'src/app/Models/VehicleModel';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-vehicle-form',
@@ -33,10 +34,12 @@ export class VehicleFormComponent implements OnInit {
   constructor(
     private makeService: MakeService,
     private featureService: FeatureService,
-    private vehicleService: VehicleService
+    private vehicleService: VehicleService,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
+    this.showSuccess();
     this.dropdownSettings = {
       singleSelection: false,
       idField: 'id',
@@ -104,6 +107,7 @@ export class VehicleFormComponent implements OnInit {
     this.vehicleService.post(this.model).subscribe({
       next: () => this.resetForm,
       error: (d) => console.log(d),
+      complete: () => this.showSuccess(),
     });
   }
 
@@ -134,5 +138,9 @@ export class VehicleFormComponent implements OnInit {
   }
   onUnSelectAll() {
     console.log('onUnSelectAll fires');
+  }
+
+  showSuccess() {
+    this.toastr.success('Hello world!', 'Toastr fun!');
   }
 }

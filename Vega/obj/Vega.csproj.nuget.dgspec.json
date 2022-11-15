@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "E:\\Training\\CarsShop\\Vega\\Vega.csproj": {}
+    "E:\\Training\\Vega\\CarsShop\\Vega\\Vega.csproj": {}
   },
   "projects": {
-    "E:\\Training\\CarsShop\\Vega\\Vega.csproj": {
+    "E:\\Training\\Vega\\CarsShop\\Vega\\Vega.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\Training\\CarsShop\\Vega\\Vega.csproj",
+        "projectUniqueName": "E:\\Training\\Vega\\CarsShop\\Vega\\Vega.csproj",
         "projectName": "Vega",
-        "projectPath": "E:\\Training\\CarsShop\\Vega\\Vega.csproj",
+        "projectPath": "E:\\Training\\Vega\\CarsShop\\Vega\\Vega.csproj",
         "packagesPath": "C:\\Users\\SherifLashin\\.nuget\\packages\\",
-        "outputPath": "E:\\Training\\CarsShop\\Vega\\obj\\",
+        "outputPath": "E:\\Training\\Vega\\CarsShop\\Vega\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\SherifLashin\\AppData\\Roaming\\NuGet\\NuGet.Config",
