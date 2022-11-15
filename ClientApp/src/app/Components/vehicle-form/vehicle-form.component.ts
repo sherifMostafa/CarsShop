@@ -1,8 +1,9 @@
 import { KeyValuePair } from './../../Models/KeyValuePairModel';
-import { MakeSerice } from './../../Services/make.service';
+import { MakeService } from './../../Services/make.service';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { FeatureSerice } from 'src/app/Services/feature.service';
+import { FeatureService } from 'src/app/Services/feature.service';
+import { VehicleService } from 'src/app/Services/vehicle.service';
 import { VehicleModel } from 'src/app/Models/VehicleModel';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 
@@ -21,7 +22,7 @@ export class VehicleFormComponent implements OnInit {
   makeId: any;
   vehicle: any;
   dataForm: FormGroup;
-  featureIds: number[] = [];
+  featureIds: Array<number> = new Array<number>();
 
   get frm() {
     return this.dataForm.controls;
@@ -30,8 +31,9 @@ export class VehicleFormComponent implements OnInit {
     return this.dataForm;
   }
   constructor(
-    private makeService: MakeSerice,
-    private featureService: FeatureSerice
+    private makeService: MakeService,
+    private featureService: FeatureService,
+    private vehicleService: VehicleService
   ) {}
 
   ngOnInit(): void {
@@ -52,6 +54,7 @@ export class VehicleFormComponent implements OnInit {
 
   buildform() {
     this.dataForm = new FormGroup({
+      nametxt: new FormControl('', Validators.compose([Validators.required])),
       model: new FormControl('', Validators.compose([Validators.required])),
       make: new FormControl('', Validators.compose([Validators.required])),
       isregisterd: new FormControl(
@@ -90,11 +93,24 @@ export class VehicleFormComponent implements OnInit {
 
   save() {
     this.submitted = true;
-    this.model.features = this.featureIds.map((x) => x);
+
     console.log(this.model.features);
     if (this.dataForm.invalid) {
       return;
     }
+
+    console.log(this.model);
+
+    this.vehicleService.post(this.model).subscribe({
+      next: () => this.resetForm,
+      error: (d) => console.log(d),
+    });
+  }
+
+  resetForm() {
+    this.submitted = false;
+    this.dataForm.reset();
+    this.model = new VehicleModel();
   }
 
   onModelChange(e: any) {
@@ -102,5 +118,21 @@ export class VehicleFormComponent implements OnInit {
 
     var selectedMake = this.makes.find((m) => m.id == e.target.value);
     this.models = selectedMake ? selectedMake.models : [];
+  }
+
+  onItemSelect(item: any) {
+    this.featureIds.push(parseInt(item.id));
+    console.log(this.featureIds);
+    this.model.features = [...this.featureIds];
+  }
+
+  onItemDeSelect(item: any) {
+    console.log('onItemDeSelect', item);
+  }
+  onSelectAll(items: any) {
+    console.log('onSelectAll', items);
+  }
+  onUnSelectAll() {
+    console.log('onUnSelectAll fires');
   }
 }

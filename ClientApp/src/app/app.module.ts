@@ -1,5 +1,5 @@
-import { FeatureSerice } from './Services/feature.service';
-import { MakeSerice } from './Services/make.service';
+import { FeatureService } from './Services/feature.service';
+import { MakeService } from './Services/make.service';
 import { AppRoutingModule } from './app-routing.module';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -12,6 +12,7 @@ import { HomeComponent } from './Components/home/home.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { VehicleService } from './Services/vehicle.service';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,7 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
     MultiSelectModule,
     NgMultiSelectDropDownModule.forRoot(),
   ],
-  providers: [MakeSerice, FeatureSerice],
+  providers: [MakeService, FeatureService, VehicleService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

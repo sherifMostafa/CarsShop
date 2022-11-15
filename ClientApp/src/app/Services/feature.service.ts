@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 @Injectable()
-export class FeatureSerice {
+export class FeatureService {
   urlPart = environment.apiBaseUrl + 'api/Features';
 
   constructor(private http: HttpClient) {}
