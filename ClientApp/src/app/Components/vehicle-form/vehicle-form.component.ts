@@ -7,6 +7,7 @@ import { VehicleService } from 'src/app/Services/vehicle.service';
 import { VehicleModel } from 'src/app/Models/VehicleModel';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { ToastrService } from 'ngx-toastr';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-vehicle-form',
@@ -14,6 +15,8 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./vehicle-form.component.css'],
 })
 export class VehicleFormComponent implements OnInit {
+  id: number = 0;
+  makeid: number = 0;
   dropdownSettings: IDropdownSettings;
   makes: any[];
   model: VehicleModel;
@@ -34,12 +37,21 @@ export class VehicleFormComponent implements OnInit {
   constructor(
     private makeService: MakeService,
     private featureService: FeatureService,
+    private route: ActivatedRoute,
     private vehicleService: VehicleService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
-    this.showSuccess();
+    this.model = new VehicleModel();
+    this.route.params.subscribe((p) => {
+      if (p['id']) {
+        this.id = p['id'];
+        this.getDataForUpdate();
+      }
+    });
+
     this.dropdownSettings = {
       singleSelection: false,
       idField: 'id',
@@ -105,9 +117,13 @@ export class VehicleFormComponent implements OnInit {
     console.log(this.model);
 
     this.vehicleService.post(this.model).subscribe({
-      next: () => this.resetForm,
+      next: () => {
+        this.router.navigate(['vehicles']);
+      },
       error: (d) => console.log(d),
-      complete: () => this.showSuccess(),
+      complete: () => {
+        this.showSuccess('Add Successfully', this.model.name);
+      },
     });
   }
 
@@ -118,9 +134,8 @@ export class VehicleFormComponent implements OnInit {
   }
 
   onModelChange(e: any) {
-    console.log(e.target.value);
-
-    var selectedMake = this.makes.find((m) => m.id == e.target.value);
+    console.log(e);
+    var selectedMake = this.makes.find((m) => m.id == e);
     this.models = selectedMake ? selectedMake.models : [];
   }
 
@@ -131,16 +146,39 @@ export class VehicleFormComponent implements OnInit {
   }
 
   onItemDeSelect(item: any) {
-    console.log('onItemDeSelect', item);
+    const index = this.featureIds.indexOf(item.id);
+    if (index > -1) this.featureIds.splice(index, 1);
+    this.model.features = [...this.featureIds];
   }
-  onSelectAll(items: any) {
-    console.log('onSelectAll', items);
+  onSelectAll(items: any[]) {
+    this.featureIds = items.map((p) => p.id);
+    this.model.features = [...this.featureIds];
   }
   onUnSelectAll() {
-    console.log('onUnSelectAll fires');
+    this.featureIds = [];
+    this.model.features = [];
   }
 
-  showSuccess() {
-    this.toastr.success('Hello world!', 'Toastr fun!');
+  getDataForUpdate() {
+    this.vehicleService.getById(this.id).subscribe({
+      next: (data) => {
+        console.log(data);
+        this.model.modelId = data.model.id;
+        this.makeId = data.make.id;
+        this.onModelChange(this.makeId);
+
+        this.model.features = data.features.map((i: any) => i.id);
+        this.model.contact.name = data.contact.name;
+        this.model.contact.email = data.contact.email;
+        this.model.contact.phone = data.contact.phone;
+        console.log(this.model.modelId);
+      },
+      error: () => {},
+      complete: () => {},
+    });
+  }
+
+  showSuccess(message: string, subject: string) {
+    this.toastr.success(message, subject);
   }
 }

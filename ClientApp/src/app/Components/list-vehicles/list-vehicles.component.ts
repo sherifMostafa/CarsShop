@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { VehicleService } from 'src/app/Services/vehicle.service';
 
 @Component({
@@ -7,7 +8,34 @@ import { VehicleService } from 'src/app/Services/vehicle.service';
   styleUrls: ['./list-vehicles.component.css'],
 })
 export class ListVehiclesComponent implements OnInit {
-  constructor(private vehicleService: VehicleService) {}
+  constructor(
+    private vehicleService: VehicleService,
+    private toastr: ToastrService
+  ) {}
 
-  ngOnInit(): void {}
+  vehicleList: any[];
+
+  ngOnInit(): void {
+    this.loadVehicles();
+    console.log(this.vehicleList);
+  }
+
+  loadVehicles() {
+    this.vehicleService.get().subscribe({
+      next: (d) => {
+        this.vehicleList = d;
+        console.log(this.vehicleList);
+      },
+      error: (err) => {
+        console.log(err.message);
+      },
+      complete: () => {
+        this.showSuccess('data Ready', 'List');
+      },
+    });
+  }
+
+  showSuccess(message: string, subject: string) {
+    this.toastr.success(message, subject);
+  }
 }

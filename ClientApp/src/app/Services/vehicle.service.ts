@@ -23,4 +23,12 @@ export class VehicleService {
     console.log(model);
     return this.http.post<any>(this.urlPart, model, this.httpOptions);
   }
+
+  get(): Observable<any[]> {
+    return this.http.get<any[]>(this.urlPart);
+  }
+
+  getById(id: number): Observable<any> {
+    return this.http.get<any>(this.urlPart + `/${id}`);
+  }
 }

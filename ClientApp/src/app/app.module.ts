@@ -16,6 +16,7 @@ import { VehicleService } from './Services/vehicle.service';
 import { ListVehiclesComponent } from './Components/list-vehicles/list-vehicles.component';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     NgMultiSelectDropDownModule.forRoot(),
     ToastrModule.forRoot(),
     BrowserAnimationsModule,
+    NgSelectModule,
   ],
   providers: [MakeService, FeatureService, VehicleService],
   bootstrap: [AppComponent],
