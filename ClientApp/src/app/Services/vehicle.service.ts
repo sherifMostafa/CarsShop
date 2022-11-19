@@ -24,6 +24,20 @@ export class VehicleService {
     return this.http.post<any>(this.urlPart, model, this.httpOptions);
   }
 
+  put(model: VehicleModel): Observable<any> {
+    console.log(model);
+    return this.http.put<any>(
+      this.urlPart + `/${model.id}`,
+      model,
+      this.httpOptions
+    );
+  }
+
+  // delete(id: number): Observable<any> {
+
+  //   return this.http.put(this.urlPart + `/${id}`, null, this.httpOptions);
+  // }
+
   get(): Observable<any[]> {
     return this.http.get<any[]>(this.urlPart);
   }

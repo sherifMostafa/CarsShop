@@ -1,7 +1,7 @@
 import { FeatureService } from './Services/feature.service';
 import { MakeService } from './Services/make.service';
 import { AppRoutingModule } from './app-routing.module';
-import { NgModule } from '@angular/core';
+import { ErrorHandler, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
@@ -17,6 +17,7 @@ import { ListVehiclesComponent } from './Components/list-vehicles/list-vehicles.
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { AppErrorHandler } from './app.error-handler';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,12 @@ import { NgSelectModule } from '@ng-select/ng-select';
     BrowserAnimationsModule,
     NgSelectModule,
   ],
-  providers: [MakeService, FeatureService, VehicleService],
+  providers: [
+    MakeService,
+    FeatureService,
+    VehicleService,
+    { provide: ErrorHandler, useClass: AppErrorHandler },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

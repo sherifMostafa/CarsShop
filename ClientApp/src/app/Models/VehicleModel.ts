@@ -4,7 +4,7 @@ export class VehicleModel {
   modelId: number;
   isRegistered: boolean;
   contact: contact = new contact();
-  features: Array<number>;
+  features: Array<number> = new Array<number>();
 }
 
 class contact {

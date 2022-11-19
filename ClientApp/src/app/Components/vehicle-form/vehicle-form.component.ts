@@ -45,6 +45,7 @@ export class VehicleFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.model = new VehicleModel();
+    this.loadData();
     this.route.params.subscribe((p) => {
       if (p['id']) {
         this.id = p['id'];
@@ -54,6 +55,7 @@ export class VehicleFormComponent implements OnInit {
 
     this.dropdownSettings = {
       singleSelection: false,
+      enableCheckAll: false,
       idField: 'id',
       textField: 'name',
       selectAllText: 'Select All',
@@ -64,7 +66,7 @@ export class VehicleFormComponent implements OnInit {
     this.model = new VehicleModel();
     this.buildform();
 
-    this.loadData();
+    // this.loadData();
   }
 
   buildform() {
@@ -102,7 +104,6 @@ export class VehicleFormComponent implements OnInit {
 
     this.featureService.getFeatures().subscribe((data) => {
       this.features = data;
-      console.log(this.features);
     });
   }
 
@@ -116,15 +117,25 @@ export class VehicleFormComponent implements OnInit {
 
     console.log(this.model);
 
-    this.vehicleService.post(this.model).subscribe({
-      next: () => {
-        this.router.navigate(['vehicles']);
-      },
-      error: (d) => console.log(d),
-      complete: () => {
-        this.showSuccess('Add Successfully', this.model.name);
-      },
-    });
+    if (this.id == 0) {
+      this.vehicleService.post(this.model).subscribe({
+        next: () => {
+          this.router.navigate(['vehicles']);
+        },
+        error: (d) => console.log(d),
+        complete: () => {
+          this.showSuccess('Add Successfully', this.model.name);
+        },
+      });
+    } else {
+      this.vehicleService.put(this.model).subscribe({
+        next: () => {},
+        error: (d) => console.log(d),
+        complete: () => {
+          this.showSuccess('Edit Successfully', this.model.name);
+        },
+      });
+    }
   }
 
   resetForm() {
@@ -150,10 +161,11 @@ export class VehicleFormComponent implements OnInit {
     if (index > -1) this.featureIds.splice(index, 1);
     this.model.features = [...this.featureIds];
   }
-  onSelectAll(items: any[]) {
-    this.featureIds = items.map((p) => p.id);
-    this.model.features = [...this.featureIds];
-  }
+  // onSelectAll(items: any[]) {
+  //   this.featureIds = items.map((p) => p.id);
+  //   this.model.features = [...this.featureIds];
+  // }
+
   onUnSelectAll() {
     this.featureIds = [];
     this.model.features = [];
@@ -163,18 +175,22 @@ export class VehicleFormComponent implements OnInit {
     this.vehicleService.getById(this.id).subscribe({
       next: (data) => {
         console.log(data);
+        this.model.id = data.id;
+        this.model.name = data.name;
         this.model.modelId = data.model.id;
         this.makeId = data.make.id;
-        this.onModelChange(this.makeId);
-
+        this.model.isRegistered = data.isRegistered;
         this.model.features = data.features.map((i: any) => i.id);
+        this.featureIds = [...this.model.features];
         this.model.contact.name = data.contact.name;
         this.model.contact.email = data.contact.email;
         this.model.contact.phone = data.contact.phone;
-        console.log(this.model.modelId);
+        console.log(this.model.features);
       },
       error: () => {},
-      complete: () => {},
+      complete: () => {
+        this.onModelChange(this.makeId);
+      },
     });
   }
 
