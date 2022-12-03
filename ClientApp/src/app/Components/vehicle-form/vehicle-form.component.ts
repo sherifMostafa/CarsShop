@@ -122,7 +122,9 @@ export class VehicleFormComponent implements OnInit {
         next: () => {
           this.router.navigate(['vehicles']);
         },
-        error: (d) => console.log(d),
+        error: (d) => {
+          this.ErrorMessage(d.ErrorMessage, this.model.name);
+        },
         complete: () => {
           this.showSuccess('Add Successfully', this.model.name);
         },
@@ -130,7 +132,9 @@ export class VehicleFormComponent implements OnInit {
     } else {
       this.vehicleService.put(this.model).subscribe({
         next: () => {},
-        error: (d) => console.log(d),
+        error: (d) => {
+          this.ErrorMessage(d, this.model.name);
+        },
         complete: () => {
           this.showSuccess('Edit Successfully', this.model.name);
         },
@@ -187,7 +191,9 @@ export class VehicleFormComponent implements OnInit {
         this.model.contact.phone = data.contact.phone;
         console.log(this.model.features);
       },
-      error: () => {},
+      error: (d) => {
+        this.ErrorMessage(d.ErrorMessage, '');
+      },
       complete: () => {
         this.onModelChange(this.makeId);
       },
@@ -196,5 +202,9 @@ export class VehicleFormComponent implements OnInit {
 
   showSuccess(message: string, subject: string) {
     this.toastr.success(message, subject);
+  }
+
+  ErrorMessage(message: string, subject: string) {
+    this.toastr.error(message, subject);
   }
 }

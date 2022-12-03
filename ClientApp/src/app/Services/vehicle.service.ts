@@ -38,11 +38,25 @@ export class VehicleService {
   //   return this.http.put(this.urlPart + `/${id}`, null, this.httpOptions);
   // }
 
-  get(): Observable<any[]> {
-    return this.http.get<any[]>(this.urlPart);
+  get(filter: any): Observable<any[]> {
+    return this.http.get<any[]>(
+      this.urlPart + '?' + this.ToQueryString(filter)
+    );
   }
 
   getById(id: number): Observable<any> {
     return this.http.get<any>(this.urlPart + `/${id}`);
+  }
+
+  ToQueryString(obj: any) {
+    let parts = [];
+    for (let property in obj) {
+      let value = obj[property];
+      if (value != null && value != undefined)
+        parts.push(
+          encodeURIComponent(property) + '=' + encodeURIComponent(value)
+        );
+    }
+    return parts.join('&');
   }
 }

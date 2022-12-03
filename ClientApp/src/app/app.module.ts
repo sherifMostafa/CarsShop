@@ -17,7 +17,7 @@ import { ListVehiclesComponent } from './Components/list-vehicles/list-vehicles.
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { AppErrorHandler } from './app.error-handler';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 @NgModule({
   declarations: [
@@ -40,12 +40,7 @@ import { AppErrorHandler } from './app.error-handler';
     BrowserAnimationsModule,
     NgSelectModule,
   ],
-  providers: [
-    MakeService,
-    FeatureService,
-    VehicleService,
-    { provide: ErrorHandler, useClass: AppErrorHandler },
-  ],
+  providers: [MakeService, FeatureService, VehicleService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

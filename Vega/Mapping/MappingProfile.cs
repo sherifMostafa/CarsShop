@@ -29,9 +29,11 @@ namespace Vega.Mapping
                 .ForMember(vr => vr.Make , opt => opt.MapFrom(v => v.Model.Make))
                 .ForMember(v => v.Contact , opt => opt.MapFrom(v => new ContactResource { Name = v.ContactName  , Email = v.ContactEmail , Phone = v.ContactPhone}))
                 .ForMember(vr => vr.Features , opt => opt.MapFrom(v => v.Features.Select(v => new KeyValuePairResource{ Id=v.Feature.Id , Name=v.Feature.Name})));
-                
+
 
             //Api Resource To Domain 
+            CreateMap<VehicleQueryResource, VehicleQuery>();
+
             CreateMap<SaveVehicleResource, Vehicle>()
                 .ForMember(v => v.Id, opt => opt.Ignore())
                 .ForMember(v => v.ContactEmail, opt => opt.MapFrom(vr => vr.Contact.Email))

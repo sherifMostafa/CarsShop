@@ -1,5 +1,17 @@
 <div class="container">
   <h2 class="text-center">Vehicles</h2>
+
+  <div class="form-group">
+    <label for="">Make</label>
+    <ng-select (change)="onFilterChange()" [(ngModel)]="filter.makeId">
+      <ng-option *ngFor="let item of makes" [value]="item.id">{{
+        item.name
+      }}</ng-option>
+    </ng-select>
+  </div>
+  <div>
+    <button class="btn btn-info" (click)="resetFilter()">Reset</button>
+  </div>
   <table class="table">
     <thead>
       <tr>
