@@ -1,11 +1,7 @@
-﻿using Vega.Extentions;
-
-namespace Vega.Domains
+﻿namespace Vega.Extentions
 {
-    public class VehicleQuery : IQueryObject
+    public interface IQueryObject
     {
-        public int? MakeId { get; set; }
-        public int? ModelId { get; set; }
         public string SortBy { get; set; }
         public bool IsSortAscending { get; set; }
         public int Page { get; set; }

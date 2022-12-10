@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { MakeService } from 'src/app/Services/make.service';
+import { ModelService } from 'src/app/Services/model.service';
 import { VehicleService } from 'src/app/Services/vehicle.service';
 
 @Component({
@@ -12,15 +13,27 @@ export class ListVehiclesComponent implements OnInit {
   constructor(
     private vehicleService: VehicleService,
     private makeService: MakeService,
+    private modelService: ModelService,
     private toastr: ToastrService
   ) {}
 
   vehicleList: any[];
   makes: any[];
-  filter: any = {};
+  models: any[];
+  filter: any = {
+    pageSize: 3,
+  };
+  columns = [
+    { title: 'Id' },
+    // { title: 'Name', key: 'name', isSortable: false },
+    { title: 'Make', key: 'make', isSortable: true },
+    { title: 'Model', key: 'model', isSortable: true },
+    { title: 'ContactName', key: 'contactName', isSortable: true },
+  ];
 
   ngOnInit(): void {
     this.loadMakes();
+    this.loadModels();
     this.populateVehicles();
   }
 
@@ -53,6 +66,9 @@ export class ListVehiclesComponent implements OnInit {
       next: (d) => {
         this.vehicleList = d;
       },
+      complete: () => {
+        console.log(this.vehicleList);
+      },
     });
   }
 
@@ -61,9 +77,27 @@ export class ListVehiclesComponent implements OnInit {
       this.makes = data;
     });
   }
+  loadModels() {
+    this.modelService.getModels().subscribe((data) => {
+      this.models = data;
+    });
+  }
 
-  onFiterChange(e: any) {
-    if (this.filter.makeid) console.log(e);
+  sortBy(columnName: any) {
+    if (this.filter.sortBy === columnName)
+      this.filter.isSortAscending = !this.filter.isSortAscending;
+    else {
+      this.filter.sortBy = columnName;
+      this.filter.isSortAscending = true;
+    }
+
+    this.populateVehicles();
+  }
+
+  onPageChange(page: any) {
+    debugger;
+    this.filter.page = page;
+    this.populateVehicles();
   }
 
   showSuccess(message: string, subject: string) {

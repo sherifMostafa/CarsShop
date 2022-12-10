@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Vega.Domains;
+using Vega.Extentions;
 using Vega.Persistence;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
@@ -36,11 +37,18 @@ namespace Vega.Repository
             {
                 ["Make"] = v => v.Model.Make.Name,
                 ["Model"] = v => v.Model.Name,
-                ["contactName"] = v => v.ContactName,
-                ["id"] = v => v.Id
+                ["contactName"] = v => v.ContactName
+                //["id"] = v => v.Id
             };
 
-           query = ApplyOrdering(queryObj,query,columnMap);
+           //query = ApplyOrdering(queryObj,query,columnMap);
+           query = query.ApplyOrdering(queryObj,columnMap);
+           query = query.ApplyPaging(queryObj);
+
+
+
+
+
 
 
             //if (queryObj.IsSortAscending)
@@ -66,12 +74,13 @@ namespace Vega.Repository
             return await query.ToListAsync();
         }
 
-        private IQueryable<Vehicle> ApplyOrdering(VehicleQuery queryObj,IQueryable<Vehicle> query, Dictionary<string, Expression<Func<Vehicle, object>>> columnMap) {
-            if (queryObj.IsSortAscending)
-                return query.OrderBy(columnMap[queryObj.SortBy]);
-            else
-                return query.OrderByDescending(columnMap[queryObj.SortBy]);
-        }
+        //private IQueryable<Vehicle> ApplyOrdering(VehicleQuery queryObj,IQueryable<Vehicle> query, Dictionary<string, Expression<Func<Vehicle, object>>> columnMap) {
+        //    if (queryObj.IsSortAscending)
+        //        return query.OrderBy(columnMap[queryObj.SortBy]);
+        //    else
+        //        return query.OrderByDescending(columnMap[queryObj.SortBy]);
+        //}
+
         public async Task<Vehicle> getVehicel(int id , bool includeRelated = true) {
             if(!includeRelated) 
                return await  _context.Vehicles.FindAsync(id);

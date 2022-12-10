@@ -18,6 +18,8 @@ import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { ModelService } from './Services/model.service';
+import { PaginationComponent } from './Components/Shared/pagination/pagination.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +29,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     NavbarComponent,
     HomeComponent,
     ListVehiclesComponent,
+    PaginationComponent,
   ],
   imports: [
     BrowserModule,
@@ -40,7 +43,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     BrowserAnimationsModule,
     NgSelectModule,
   ],
-  providers: [MakeService, FeatureService, VehicleService],
+  providers: [MakeService, ModelService, FeatureService, VehicleService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

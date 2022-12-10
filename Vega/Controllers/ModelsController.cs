@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Vega.Domains;
 using Vega.Persistence;
+using Vega.Resources;
 
 namespace Vega.Controllers
 {
@@ -23,6 +24,14 @@ namespace Vega.Controllers
             _context = context;
             _mapper = mapper;
         }
-       
+
+        [HttpGet]
+        public async Task<IEnumerable<KeyValuePairResource>> getModels()
+        {
+            var models = await _context.Models.ToListAsync();
+            return _mapper.Map<List<Model>, List<KeyValuePairResource>>(models);
+            //return await _context.Makes.ToListAsync();
+        }
+
     }
 }
