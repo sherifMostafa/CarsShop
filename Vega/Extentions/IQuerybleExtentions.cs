@@ -27,7 +27,7 @@ namespace Vega.Extentions
             //    queryObj.PageSize = 10;
 
             queryObj.PageSize = queryObj.PageSize <= 0 ? Convert.ToByte(10) : queryObj.PageSize;
-            queryObj.Page = queryObj.Page <= 0 ? 1 : queryObj.PageSize;
+            queryObj.Page = queryObj.Page <= 0 ? 1 : queryObj.Page;
 
             return  query.Skip((queryObj.Page - 1) * queryObj.PageSize).Take(queryObj.PageSize);
         }

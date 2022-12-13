@@ -10,6 +10,8 @@ import { VehicleService } from 'src/app/Services/vehicle.service';
   styleUrls: ['./list-vehicles.component.css'],
 })
 export class ListVehiclesComponent implements OnInit {
+  private readonly PAGE_SIZE = 10;
+
   constructor(
     private vehicleService: VehicleService,
     private makeService: MakeService,
@@ -17,11 +19,12 @@ export class ListVehiclesComponent implements OnInit {
     private toastr: ToastrService
   ) {}
 
+  queryResult: any;
   vehicleList: any[];
   makes: any[];
   models: any[];
   filter: any = {
-    pageSize: 3,
+    pageSize: 10,
   };
   columns = [
     { title: 'Id' },
@@ -57,14 +60,17 @@ export class ListVehiclesComponent implements OnInit {
   }
 
   resetFilter() {
-    this.filter = {};
+    this.filter = {
+      page: 1,
+      pageSize: this.PAGE_SIZE,
+    };
     this.onFilterChange();
   }
 
   private populateVehicles() {
     this.vehicleService.get(this.filter).subscribe({
-      next: (d) => {
-        this.vehicleList = d;
+      next: (result: any) => {
+        this.queryResult = result;
       },
       complete: () => {
         console.log(this.vehicleList);
@@ -95,7 +101,6 @@ export class ListVehiclesComponent implements OnInit {
   }
 
   onPageChange(page: any) {
-    debugger;
     this.filter.page = page;
     this.populateVehicles();
   }

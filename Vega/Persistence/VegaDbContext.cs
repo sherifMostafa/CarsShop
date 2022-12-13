@@ -14,13 +14,11 @@ namespace Vega.Persistence
         {
 
         }
-
         public DbSet<Model> Models { get; set; }
         public DbSet<Make> Makes { get; set; }
         public DbSet<Feature> Features { get; set; }
         public DbSet<Vehicle> Vehicles { get; set; }
-
-
+        public DbSet<Photo> Photos { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //Model Fluint Api
@@ -69,11 +67,15 @@ namespace Vega.Persistence
             modelBuilder.Entity<Vehicle>().Property(p => p.ContactPhone).HasMaxLength(255).IsRequired();
             modelBuilder.Entity<Vehicle>().Property(p => p.ContactEmail).HasMaxLength(255);
             modelBuilder.Entity<Vehicle>().HasMany(P => P.Features).WithOne(p=> p.Vehicle).HasForeignKey(f => f.VehicleId);
+            modelBuilder.Entity<Vehicle>().HasMany(P => P.Photos).WithOne(p => p.Vehicle).HasForeignKey(f => f.VehicleId);
 
             //VehiclesFeatures
             modelBuilder.Entity<VehicleFeature>().ToTable("VehiclesFeatures", "dbo");
             modelBuilder.Entity<VehicleFeature>().HasKey(p => new { p.FeatureId , p.VehicleId});
 
+            //Photo
+            modelBuilder.Entity<Photo>().ToTable("Photos", "dbo");
+            modelBuilder.Entity<Photo>().Property(p => p.FileName).HasMaxLength(255).IsRequired();
 
         }
     }

@@ -20,7 +20,9 @@ namespace Vega.Repository
             _context= context;
         }
 
-        public async Task<IEnumerable<Vehicle>> getAllVehicle(VehicleQuery queryObj) {
+        public async Task<QueryResult<Vehicle>> getAllVehicle(VehicleQuery queryObj) {
+
+            var result = new QueryResult<Vehicle>();
             var query =  _context.Vehicles
             .Include(p => p.Features).ThenInclude(p=> p.Feature)
             .Include(p => p.Model).ThenInclude( p=> p.Make).AsQueryable();
@@ -35,16 +37,17 @@ namespace Vega.Repository
 
             var columnMap = new Dictionary<string, Expression<Func<Vehicle, object>>>()
             {
-                ["Make"] = v => v.Model.Make.Name,
-                ["Model"] = v => v.Model.Name,
+                ["make"] = v => v.Model.Make.Name,
+                ["model"] = v => v.Model.Name,
                 ["contactName"] = v => v.ContactName
                 //["id"] = v => v.Id
             };
 
            //query = ApplyOrdering(queryObj,query,columnMap);
            query = query.ApplyOrdering(queryObj,columnMap);
+           result.TotalItems = await query.CountAsync();
            query = query.ApplyPaging(queryObj);
-
+           result.Items = await query.ToListAsync();
 
 
 
@@ -71,7 +74,7 @@ namespace Vega.Repository
             //if (queryObj.SortBy == "id")
             //    query = (queryObj.IsSortAscending) ? query.OrderBy(v => v.Id) : query.OrderByDescending(v => v.Id);
 
-            return await query.ToListAsync();
+            return result;
         }
 
         //private IQueryable<Vehicle> ApplyOrdering(VehicleQuery queryObj,IQueryable<Vehicle> query, Dictionary<string, Expression<Func<Vehicle, object>>> columnMap) {

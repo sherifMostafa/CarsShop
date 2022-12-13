@@ -41,6 +41,7 @@ namespace Vega
             //});
             services.AddControllers();
 
+
             services.AddCors(o => o.AddDefaultPolicy(buillder =>
             {
                 buillder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();

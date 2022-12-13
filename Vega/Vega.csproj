@@ -5,14 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Domains\QueryResult.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="Domains\QueryResult.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="5.0.13" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.13" />
@@ -22,6 +14,10 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
   </ItemGroup>
 
 </Project>
