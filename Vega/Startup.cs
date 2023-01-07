@@ -16,6 +16,7 @@ using Vega.Repository;
 using Newtonsoft.Json.Serialization;
 using System.Reflection;
 using Vega.UnitOfwork;
+using Vega.Models;
 
 namespace Vega
 {
@@ -31,6 +32,8 @@ namespace Vega
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<PhotoSettings>(Configuration.GetSection("PhotoSettings"));
+
             services.AddScoped<IUnitOfWork , UnitOfWork>();
             services.AddScoped<IVehicleRepository , VehicleRepository>();
             services.AddAutoMapper(Assembly.GetExecutingAssembly());

@@ -1,207 +1,266 @@
 <div class="container">
-  <h1>New Vehicle</h1>
-  <h2>{{ this.model | json }}</h2>
-  <form [formGroup]="dataForm">
-    <div class="form-group">
-      <label for="nametxt">Name</label
-      ><input
-        type="text"
-        class="form-control"
-        [(ngModel)]="model.name"
-        formControlName="nametxt"
-      />
-      <div class="alert-danger" *ngIf="submitted && frm['nametxt'].errors">
-        <div *ngIf="frm['nametxt'].errors?.['required']">
-          <small> Enter Name </small>
-        </div>
-      </div>
-    </div>
-    <div class="form-group">
-      <label for="Make">Make</label>
-
-      <ng-select
-        [(ngModel)]="makeId"
-        (change)="onModelChange($event)"
-        formControlName="make"
+  <ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button
+        class="nav-link active"
+        id="home-tab"
+        data-bs-toggle="tab"
+        data-bs-target="#home-tab-pane"
+        type="button"
+        role="tab"
+        aria-controls="home-tab-pane"
+        aria-selected="true"
       >
-        <ng-option *ngFor="let item of makes" [value]="item.id">{{
-          item.name
-        }}</ng-option>
-      </ng-select>
-
-      <!-- <select
-        class="form-control"
-        id="Make"
-        (change)="onModelChange($event)"
-        formControlName="make"
-        [value]="makeid"
-        [(ngModel)]="makeid"
-        aria-placeholder="Choose Make"
+        Data
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button
+        class="nav-link"
+        id="profile-tab"
+        data-bs-toggle="tab"
+        data-bs-target="#profile-tab-pane"
+        type="button"
+        role="tab"
+        aria-controls="profile-tab-pane"
+        aria-selected="false"
       >
-        <option [ngValue]="null" aria-disabled="true">Choose</option>
-        <option
-          *ngFor="let item of makes"
-          value="{{ item.id }}"
-          aria-disabled="true"
-        >
-          {{ item.name }}
-        </option>
-      </select> -->
-      <div class="alert-danger" *ngIf="submitted && frm['make'].errors">
-        <div *ngIf="frm['make'].errors?.['required']">
-          <small> Choose Make </small>
-        </div>
-      </div>
-    </div>
-    <div class="form-group">
-      <label for="Model">Model</label>
+        Photos
+      </button>
+    </li>
+  </ul>
+  <div class="tab-content" id="myTabContent">
+    <div
+      class="tab-pane fade show active"
+      id="home-tab-pane"
+      role="tabpanel"
+      aria-labelledby="home-tab"
+      tabindex="0"
+    >
+      <div>
+        <h1>New Vehicle</h1>
+        <h2>{{ this.model | json }}</h2>
+        <form [formGroup]="dataForm">
+          <div class="form-group">
+            <label for="nametxt">Name</label
+            ><input
+              type="text"
+              class="form-control"
+              [(ngModel)]="model.name"
+              formControlName="nametxt"
+            />
+            <div
+              class="alert-danger"
+              *ngIf="submitted && frm['nametxt'].errors"
+            >
+              <div *ngIf="frm['nametxt'].errors?.['required']">
+                <small> Enter Name </small>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="Make">Make</label>
 
-      <ng-select [(ngModel)]="model.modelId" formControlName="model">
-        <ng-option *ngFor="let item of models" [value]="item.id">{{
-          item.name
-        }}</ng-option>
-      </ng-select>
+            <ng-select
+              [(ngModel)]="makeId"
+              (change)="onModelChange($event)"
+              formControlName="make"
+            >
+              <ng-option *ngFor="let item of makes" [value]="item.id">{{
+                item.name
+              }}</ng-option>
+            </ng-select>
 
-      <!-- <select
-        class="form-control"
-        id="Model"
-        formControlName="model"
-        [(ngModel)]="model.modelId"
-        aria-placeholder="Choose Model"
-      >
-        <option [ngValue]="null" aria-disabled="true">Choose</option>
-        <option *ngFor="let item of models" value="{{ item.id }}">
-          {{ item.name }}
-        </option>
-      </select> -->
-
-      <div class="alert-danger" *ngIf="submitted && frm['make'].errors">
-        <div *ngIf="frm['model'].errors?.['required']">
-          <small> Choose Model </small>
-        </div>
-      </div>
-    </div>
-    <div class="form-group">
-      <p>Is this Vehicle Registerd</p>
-      <div class="radio">
-        <label for="Registered">
-          <input
-            type="radio"
-            id="Registered"
-            name="isregisterd"
-            formControlName="isregisterd"
-            [value]="true"
-            [(ngModel)]="model.isRegistered"
-          />
-          Yes
-        </label>
-      </div>
-      <div class="radio">
-        <label for="NotRegistered">
-          <input
-            type="radio"
-            id="NotRegistered"
-            name="isregisterd"
-            formControlName="isregisterd"
-            [value]="false"
-            [(ngModel)]="model.isRegistered"
-          />
-          No
-        </label>
-      </div>
-
-      <div class="alert-danger" *ngIf="submitted && frm['isregisterd'].errors">
-        <div *ngIf="frm['isregisterd'].errors?.['required']">
-          <small> Please Choose the Vehicle Registered Or Not </small>
-        </div>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <h2>Features</h2>
-      <ng-multiselect-dropdown
-        [placeholder]="'custom placeholder'"
-        [settings]="dropdownSettings"
-        [data]="features"
-        [(ngModel)]="model.features"
-        formControlName="featuresControl"
-        (onSelect)="onItemSelect($event)"
-        (onDeSelect)="onItemDeSelect($event)"
-        (onDeSelectAll)="onUnSelectAll()"
-      >
-        >
-      </ng-multiselect-dropdown>
-      <div
-        class="alert-danger"
-        *ngIf="submitted && frm['featuresControl'].errors"
-      >
-        <div *ngIf="frm['featuresControl'].errors?.['required']">
-          <small> Select Features </small>
-        </div>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <h2>Contact</h2>
-      <div class="form-group">
-        <label for="contactName">Name</label
-        ><input
-          type="text"
+            <!-- <select
           class="form-control"
-          [(ngModel)]="model.contact.name"
-          formControlName="contactName"
-        />
-        <div
-          class="alert-danger"
-          *ngIf="submitted && frm['contactName'].errors"
+          id="Make"
+          (change)="onModelChange($event)"
+          formControlName="make"
+          [value]="makeid"
+          [(ngModel)]="makeid"
+          aria-placeholder="Choose Make"
         >
-          <div *ngIf="frm['contactName'].errors?.['required']">
-            <small> Enter Contact Name </small>
+          <option [ngValue]="null" aria-disabled="true">Choose</option>
+          <option
+            *ngFor="let item of makes"
+            value="{{ item.id }}"
+            aria-disabled="true"
+          >
+            {{ item.name }}
+          </option>
+        </select> -->
+            <div class="alert-danger" *ngIf="submitted && frm['make'].errors">
+              <div *ngIf="frm['make'].errors?.['required']">
+                <small> Choose Make </small>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="contactPhone">Phone</label
-        ><input
-          type="text"
-          class="form-control"
-          [(ngModel)]="model.contact.phone"
-          formControlName="contactPhone"
-        />
-        <div
-          class="alert-danger"
-          *ngIf="submitted && frm['contactPhone'].errors"
-        >
-          <div *ngIf="frm['contactPhone'].errors?.['required']">
-            <small> Enter Contact Phone </small>
-          </div>
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="contactEmail">Email</label
-        ><input
-          type="text"
-          class="form-control"
-          [(ngModel)]="model.contact.email"
-          formControlName="contactEmail"
-        />
+          <div class="form-group">
+            <label for="Model">Model</label>
 
-        <div
-          class="alert-danger"
-          *ngIf="submitted && frm['contactEmail'].errors"
+            <ng-select [(ngModel)]="model.modelId" formControlName="model">
+              <ng-option *ngFor="let item of models" [value]="item.id">{{
+                item.name
+              }}</ng-option>
+            </ng-select>
+
+            <!-- <select
+          class="form-control"
+          id="Model"
+          formControlName="model"
+          [(ngModel)]="model.modelId"
+          aria-placeholder="Choose Model"
         >
-          <div *ngIf="frm['contactEmail'].errors?.['required']">
-            <small> Enter Contact Email </small>
+          <option [ngValue]="null" aria-disabled="true">Choose</option>
+          <option *ngFor="let item of models" value="{{ item.id }}">
+            {{ item.name }}
+          </option>
+        </select> -->
+
+            <div class="alert-danger" *ngIf="submitted && frm['make'].errors">
+              <div *ngIf="frm['model'].errors?.['required']">
+                <small> Choose Model </small>
+              </div>
+            </div>
           </div>
-          <div *ngIf="frm['contactEmail'].errors?.['email']">
-            <small> Enter Contact Email in Right Formate </small>
+          <div class="form-group">
+            <p>Is this Vehicle Registerd</p>
+            <div class="radio">
+              <label for="Registered">
+                <input
+                  type="radio"
+                  id="Registered"
+                  name="isregisterd"
+                  formControlName="isregisterd"
+                  [value]="true"
+                  [(ngModel)]="model.isRegistered"
+                />
+                Yes
+              </label>
+            </div>
+            <div class="radio">
+              <label for="NotRegistered">
+                <input
+                  type="radio"
+                  id="NotRegistered"
+                  name="isregisterd"
+                  formControlName="isregisterd"
+                  [value]="false"
+                  [(ngModel)]="model.isRegistered"
+                />
+                No
+              </label>
+            </div>
+
+            <div
+              class="alert-danger"
+              *ngIf="submitted && frm['isregisterd'].errors"
+            >
+              <div *ngIf="frm['isregisterd'].errors?.['required']">
+                <small> Please Choose the Vehicle Registered Or Not </small>
+              </div>
+            </div>
           </div>
-        </div>
+
+          <div class="form-group">
+            <h2>Features</h2>
+            <ng-multiselect-dropdown
+              [placeholder]="'custom placeholder'"
+              [settings]="dropdownSettings"
+              [data]="features"
+              [(ngModel)]="model.features"
+              formControlName="featuresControl"
+              (onSelect)="onItemSelect($event)"
+              (onDeSelect)="onItemDeSelect($event)"
+              (onDeSelectAll)="onUnSelectAll()"
+            >
+              >
+            </ng-multiselect-dropdown>
+            <div
+              class="alert-danger"
+              *ngIf="submitted && frm['featuresControl'].errors"
+            >
+              <div *ngIf="frm['featuresControl'].errors?.['required']">
+                <small> Select Features </small>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <h2>Contact</h2>
+            <div class="form-group">
+              <label for="contactName">Name</label
+              ><input
+                type="text"
+                class="form-control"
+                [(ngModel)]="model.contact.name"
+                formControlName="contactName"
+              />
+              <div
+                class="alert-danger"
+                *ngIf="submitted && frm['contactName'].errors"
+              >
+                <div *ngIf="frm['contactName'].errors?.['required']">
+                  <small> Enter Contact Name </small>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="contactPhone">Phone</label
+              ><input
+                type="text"
+                class="form-control"
+                [(ngModel)]="model.contact.phone"
+                formControlName="contactPhone"
+              />
+              <div
+                class="alert-danger"
+                *ngIf="submitted && frm['contactPhone'].errors"
+              >
+                <div *ngIf="frm['contactPhone'].errors?.['required']">
+                  <small> Enter Contact Phone </small>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="contactEmail">Email</label
+              ><input
+                type="text"
+                class="form-control"
+                [(ngModel)]="model.contact.email"
+                formControlName="contactEmail"
+              />
+
+              <div
+                class="alert-danger"
+                *ngIf="submitted && frm['contactEmail'].errors"
+              >
+                <div *ngIf="frm['contactEmail'].errors?.['required']">
+                  <small> Enter Contact Email </small>
+                </div>
+                <div *ngIf="frm['contactEmail'].errors?.['email']">
+                  <small> Enter Contact Email in Right Formate </small>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary" (click)="save()">
+            Submit
+          </button>
+        </form>
       </div>
     </div>
+    <div
+      class="tab-pane fade"
+      id="profile-tab-pane"
+      role="tabpanel"
+      aria-labelledby="profile-tab"
+      tabindex="0"
+    >
+      <h2>PHOTOS</h2>
 
-    <button type="submit" class="btn btn-primary" (click)="save()">
-      Submit
-    </button>
-  </form>
+      <input type="file" (change)="uploadPhoto()" #fileInput />
+    </div>
+  </div>
 </div>

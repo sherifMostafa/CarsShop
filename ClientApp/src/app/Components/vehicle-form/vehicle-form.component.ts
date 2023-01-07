@@ -1,6 +1,7 @@
+import { PhotoService } from './../../Services/photo.service';
 import { KeyValuePair } from './../../Models/KeyValuePairModel';
 import { MakeService } from './../../Services/make.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { FeatureService } from 'src/app/Services/feature.service';
 import { VehicleService } from 'src/app/Services/vehicle.service';
@@ -15,6 +16,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./vehicle-form.component.css'],
 })
 export class VehicleFormComponent implements OnInit {
+  @ViewChild('fileInput') fileInput: ElementRef;
   id: number = 0;
   makeid: number = 0;
   dropdownSettings: IDropdownSettings;
@@ -40,7 +42,8 @@ export class VehicleFormComponent implements OnInit {
     private route: ActivatedRoute,
     private vehicleService: VehicleService,
     private toastr: ToastrService,
-    private router: Router
+    private router: Router,
+    private photoService: PhotoService
   ) {}
 
   ngOnInit(): void {
@@ -149,14 +152,14 @@ export class VehicleFormComponent implements OnInit {
   }
 
   onModelChange(e: any) {
-    console.log(e);
+    // console.log(e);
     var selectedMake = this.makes.find((m) => m.id == e);
     this.models = selectedMake ? selectedMake.models : [];
   }
 
   onItemSelect(item: any) {
     this.featureIds.push(parseInt(item.id));
-    console.log(this.featureIds);
+    // console.log(this.featureIds);
     this.model.features = [...this.featureIds];
   }
 
@@ -178,7 +181,7 @@ export class VehicleFormComponent implements OnInit {
   getDataForUpdate() {
     this.vehicleService.getById(this.id).subscribe({
       next: (data) => {
-        console.log(data);
+        // console.log(data);
         this.model.id = data.id;
         this.model.name = data.name;
         this.model.modelId = data.model.id;
@@ -189,13 +192,27 @@ export class VehicleFormComponent implements OnInit {
         this.model.contact.name = data.contact.name;
         this.model.contact.email = data.contact.email;
         this.model.contact.phone = data.contact.phone;
-        console.log(this.model.features);
+        // console.log(this.model.features);
       },
       error: (d) => {
         this.ErrorMessage(d.ErrorMessage, '');
       },
       complete: () => {
         this.onModelChange(this.makeId);
+      },
+    });
+  }
+
+  uploadPhoto() {
+    debugger;
+    let nativeElement: HTMLInputElement = this.fileInput.nativeElement;
+
+    this.photoService.upload(this.id, nativeElement.files![0]).subscribe({
+      next: (data) => {
+        console.log(data);
+      },
+      error: (d) => {
+        this.ErrorMessage(d.ErrorMessage, '');
       },
     });
   }

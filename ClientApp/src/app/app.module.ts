@@ -1,3 +1,4 @@
+import { PhotoService } from './Services/photo.service';
 import { FeatureService } from './Services/feature.service';
 import { MakeService } from './Services/make.service';
 import { AppRoutingModule } from './app-routing.module';
@@ -43,7 +44,13 @@ import { PaginationComponent } from './Components/Shared/pagination/pagination.c
     BrowserAnimationsModule,
     NgSelectModule,
   ],
-  providers: [MakeService, ModelService, FeatureService, VehicleService],
+  providers: [
+    MakeService,
+    ModelService,
+    FeatureService,
+    VehicleService,
+    PhotoService,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

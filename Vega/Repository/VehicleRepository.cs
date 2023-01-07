@@ -26,6 +26,7 @@ namespace Vega.Repository
             var query =  _context.Vehicles
             .Include(p => p.Features).ThenInclude(p=> p.Feature)
             .Include(p => p.Model).ThenInclude( p=> p.Make).AsQueryable();
+
             if (queryObj.MakeId.HasValue)
                 query = query.Where(p => p.Model.MakeId == queryObj.MakeId);
             if (queryObj.ModelId.HasValue)
