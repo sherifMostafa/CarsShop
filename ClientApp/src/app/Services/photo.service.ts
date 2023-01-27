@@ -23,4 +23,8 @@ export class PhotoService {
       }
     );
   }
+
+  getPhotos(vehicleId: number): Observable<any[]> {
+    return this.http.get<any[]>(this.urlPart + `/${vehicleId}/photos`);
+  }
 }

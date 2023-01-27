@@ -17,6 +17,7 @@ using Newtonsoft.Json.Serialization;
 using System.Reflection;
 using Vega.UnitOfwork;
 using Vega.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace Vega
 {
@@ -36,6 +37,7 @@ namespace Vega
 
             services.AddScoped<IUnitOfWork , UnitOfWork>();
             services.AddScoped<IVehicleRepository , VehicleRepository>();
+            services.AddScoped<IPhotoRepository, PhotoRepository>();
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddDbContext<VegaDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
             //services.AddControllers().AddNewtonsoftJson(options =>
@@ -43,6 +45,19 @@ namespace Vega
             //    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
             //});
             services.AddControllers();
+
+            //auth 0
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options =>
+            {
+                options.Authority = "https://dev-f604vp3hefj6gtyi.us.auth0.com/";
+                options.Audience = "https://api.vega.com";
+            });
+
 
 
             services.AddCors(o => o.AddDefaultPolicy(buillder =>
@@ -65,7 +80,8 @@ namespace Vega
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Vega v1"));
             }
-
+            app.UseStaticFiles();
+            app.UseAuthentication();
             app.UseRouting();
             app.UseCors();
             app.UseAuthorization();

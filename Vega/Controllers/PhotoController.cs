@@ -3,7 +3,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json.Linq;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -26,12 +28,14 @@ namespace Vega.Controllers
         private readonly PhotoSettings _photoSettings;
         private readonly IHostEnvironment _host;
         private readonly IVehicleRepository _vehicelRepo;
+        private readonly IPhotoRepository _photoRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public PhotoController(IHostEnvironment host, IVehicleRepository vehicelRepo , IUnitOfWork unitOfWork, IMapper mapper, IOptions<PhotoSettings> options)
+        public PhotoController(IHostEnvironment host, IVehicleRepository vehicelRepo , IUnitOfWork unitOfWork, IMapper mapper, IPhotoRepository photoRepository, IOptions<PhotoSettings> options)
         {
             _photoSettings = options.Value;
+            _photoRepository = photoRepository;
             _host = host;
             _vehicelRepo = vehicelRepo;
             _unitOfWork = unitOfWork;
@@ -51,7 +55,7 @@ namespace Vega.Controllers
             if (!_photoSettings.IsSupported(file.FileName))
                 return BadRequest("Invalid File Type");
             
-            var uploadsFolderPath =  Path.Combine(Directory.GetCurrentDirectory(), "uploads");
+            var uploadsFolderPath =  Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\uploads");
             if(!Directory.Exists(uploadsFolderPath))
             {
                 Directory.CreateDirectory(uploadsFolderPath);
@@ -74,5 +78,13 @@ namespace Vega.Controllers
 
             return Ok(_mapper.Map<PhotoResource>(photo));
         }
+
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<PhotoResource>>> GetPhotos(int vehicleId)
+        {
+            var result = await _photoRepository.GetPhotos(vehicleId);
+            return Ok(_mapper.Map<IEnumerable<Photo>, IEnumerable<PhotoResource>>(result));
+        }
+
     }
 }

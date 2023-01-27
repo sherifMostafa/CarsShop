@@ -21,6 +21,10 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { ModelService } from './Services/model.service';
 import { PaginationComponent } from './Components/Shared/pagination/pagination.component';
+import { NgProgressHttpModule } from '@ngx-progressbar/http';
+import { AuthModule } from '@auth0/auth0-angular';
+import { environment as env } from 'src/environments/environment';
+import { LoginButtonComponent } from './login-button/login-button.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +35,7 @@ import { PaginationComponent } from './Components/Shared/pagination/pagination.c
     HomeComponent,
     ListVehiclesComponent,
     PaginationComponent,
+    LoginButtonComponent,
   ],
   imports: [
     BrowserModule,

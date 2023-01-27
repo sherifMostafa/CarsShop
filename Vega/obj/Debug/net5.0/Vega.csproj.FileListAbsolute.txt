@@ -196,3 +196,4 @@ E:\Training\Vega\CarsShop\Vega\obj\Debug\net5.0\refint\Vega.dll
 E:\Training\Vega\CarsShop\Vega\obj\Debug\net5.0\Vega.pdb
 E:\Training\Vega\CarsShop\Vega\obj\Debug\net5.0\Vega.genruntimeconfig.cache
 E:\Training\Vega\CarsShop\Vega\obj\Debug\net5.0\ref\Vega.dll
+E:\Training\Vega\CarsShop\Vega\bin\Debug\net5.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll

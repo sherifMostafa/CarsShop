@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -25,6 +26,7 @@ namespace Vega.Controllers
             _mapper = mapper;
         }
         [HttpGet]
+        [Authorize]
         public async Task<IEnumerable<KeyValuePairResource>> getFeatures()
         {
             var features = await _context.Features.ToListAsync();

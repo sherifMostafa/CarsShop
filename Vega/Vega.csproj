@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.17" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="5.0.13" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.13" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.13" />
@@ -17,7 +18,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\uploads\" />
+    <None Include="wwwroot\uploads\2a15c78a-3d34-4d5e-baae-3c8f0313eac9.PNG" />
+    <None Include="wwwroot\uploads\45fc0a12-bc6b-4b34-8f35-08c6a81618c7.PNG" />
+    <None Include="wwwroot\uploads\49b26e56-21de-4d6a-a3d0-79db3a0b9286.PNG" />
+    <None Include="wwwroot\uploads\816b6903-c39e-4dc3-b17a-f897659aa75f.PNG" />
+    <None Include="wwwroot\uploads\f8ab3c21-60be-4652-8db9-3f4620d4adfa.PNG" />
   </ItemGroup>
 
 </Project>

@@ -17,6 +17,8 @@
     "experimentalDecorators": true,
     "moduleResolution": "node",
     "importHelpers": true,
+    // to import json file
+    "resolveJsonModule": true,
     "target": "es2020",
     "module": "es2020",
     "lib": ["es2020", "dom"]

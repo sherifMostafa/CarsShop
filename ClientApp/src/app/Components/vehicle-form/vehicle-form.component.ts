@@ -1,7 +1,15 @@
+import { map } from 'rxjs/operators';
 import { PhotoService } from './../../Services/photo.service';
 import { KeyValuePair } from './../../Models/KeyValuePairModel';
 import { MakeService } from './../../Services/make.service';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnInit,
+  ViewChild,
+  Output,
+  EventEmitter,
+} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { FeatureService } from 'src/app/Services/feature.service';
 import { VehicleService } from 'src/app/Services/vehicle.service';
@@ -9,6 +17,8 @@ import { VehicleModel } from 'src/app/Models/VehicleModel';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute, Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
+import { HttpEventType } from '@angular/common/http';
 
 @Component({
   selector: 'app-vehicle-form',
@@ -17,10 +27,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class VehicleFormComponent implements OnInit {
   @ViewChild('fileInput') fileInput: ElementRef;
+  urlPart = environment.apiBaseUrl;
   id: number = 0;
   makeid: number = 0;
   dropdownSettings: IDropdownSettings;
   makes: any[];
+  photos: any[];
   model: VehicleModel;
   features: any[];
   submitted = false;
@@ -29,6 +41,11 @@ export class VehicleFormComponent implements OnInit {
   vehicle: any;
   dataForm: FormGroup;
   featureIds: Array<number> = new Array<number>();
+
+  // progress bar
+  public message: string = '';
+  public progress: number = 0;
+  @Output() public onUploadFinish = new EventEmitter();
 
   get frm() {
     return this.dataForm.controls;
@@ -55,6 +72,7 @@ export class VehicleFormComponent implements OnInit {
         this.getDataForUpdate();
       }
     });
+    this.loadPhotos();
 
     this.dropdownSettings = {
       singleSelection: false,
@@ -66,7 +84,6 @@ export class VehicleFormComponent implements OnInit {
       itemsShowLimit: 3,
       allowSearchFilter: true,
     };
-    this.model = new VehicleModel();
     this.buildform();
 
     // this.loadData();
@@ -108,6 +125,15 @@ export class VehicleFormComponent implements OnInit {
     this.featureService.getFeatures().subscribe((data) => {
       this.features = data;
     });
+  }
+
+  loadPhotos() {
+    if (this.id != 0) {
+      this.photoService.getPhotos(this.id).subscribe((data) => {
+        this.photos = data;
+        console.log(this.photos);
+      });
+    }
   }
 
   save() {
@@ -204,16 +230,24 @@ export class VehicleFormComponent implements OnInit {
   }
 
   uploadPhoto() {
-    debugger;
     let nativeElement: HTMLInputElement = this.fileInput.nativeElement;
 
     this.photoService.upload(this.id, nativeElement.files![0]).subscribe({
       next: (data) => {
-        console.log(data);
+        if (data.type === HttpEventType.UploadProgress) {
+          this.progress = Math.round((100 * data.loaded) / (data.total ?? 1));
+        } else if (data.type === HttpEventType.Response) {
+          this.message = 'upload success';
+          this.onUploadFinish.emit(data.body);
+        }
+
+        this.loadPhotos();
       },
       error: (d) => {
+        console.log(d);
         this.ErrorMessage(d.ErrorMessage, '');
       },
+      complete: () => {},
     });
   }
 
